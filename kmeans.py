@@ -73,18 +73,21 @@ def draw_ax(ax):
 
 # 函数功能：计算两个向量之间欧氏距离
 def dist_eclud(vecA, vecB):
-    vec_square = []
-    for element in vecA - vecB:
-        element = element ** 2
-        vec_square.append(element)
-    return sum(vec_square) ** 0.5
+    vecB = np.append(vecB, np.zeros(len(vecA) - len(vecB)))
+    dist = np.sqrt(np.sum((vecA - vecB) ** 2))
+    return dist
+    # vec_square = []
+    # for element in vecA - vecB:
+    #     element = element ** 2
+    #     vec_square.append(element)
+    # return sum(vec_square) ** 0.5
 
 def load_data_set(file_name):
     data_mat = []
     with open(file_name) as fr:
         # 按行读出文件内数据
         for line in fr.readlines():
-            curLine = line.strip().split('\t')  # 去掉末尾的’\n‘，返回一个列表
+            curLine = line.strip().split(',')  # 去掉末尾的’\n‘，返回一个列表
             fltLine = list(map(lambda x: float(x), curLine))  # map 与 lambda
             data_mat.append(fltLine)
     return np.array(data_mat)
@@ -209,7 +212,7 @@ color = ["pink", "blue", "green", "orange", "purple"]
 marker = ['^', '+', 'p', 's', '*']
 # 全局变量（因为按钮的函数里不能带参，所以只能用全局变量了）
 # 从文件中读取数据
-data_set = load_data_set("testSet.txt")
+data_set = load_data_set("kmeans_dataset.txt")
 # 使用matplotlib，画出数据集和按钮
 fig, ax = plt.subplots(figsize=(8, 8))
 my_centroids, bnext, bcolor, bskip, bkmeans = drawScatter(data_set, ax)
