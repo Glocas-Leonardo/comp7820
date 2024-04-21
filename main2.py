@@ -46,8 +46,14 @@ class AlgorithmSelectionApp:
 
     def execute_kmeans_algorithm(self):
         if self.file_path_kmeans:
-            kmeans_cluster = KMeansCluster(self.file_path_kmeans)
-            kmeans_cluster.run()
+            try:
+                kmeans_cluster = KMeansCluster(self.file_path_kmeans)
+                messagebox.showinfo("Execution", "K-means algorithm executed successfully!")
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to execute K-means algorithm: {e}")
+        else:
+            messagebox.showerror("Error", "Please upload K-means data first!")
+
 
     def execute_density_peak_algorithm(self):
         if self.file_path_density_peak:
