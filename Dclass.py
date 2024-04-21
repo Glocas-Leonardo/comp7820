@@ -15,8 +15,8 @@ class DensityPeakCluster:
         self.labs = self.cluster_PD(self.rho, self.centers, self.nearest_neiber)
         self.draw_decision(self.rho, self.deltas, file_name + "_decision.jpg")
         self.draw_cluster(self.datas, self.labs, self.centers, file_name + "_cluster.jpg")
-        self.draw_decision()
-        self.draw_cluster()
+        #self.draw_decision()
+        #self.draw_cluster()
 
     def load_data(self, file_name):
         with open(file_name, 'r') as f:
