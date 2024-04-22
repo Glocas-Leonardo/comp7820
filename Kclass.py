@@ -1,6 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Button
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import tkinter as tk
+from tkinter import filedialog
+from tkinter import messagebox
 
 #封装Kmeans类
 class KMeansCluster:
@@ -107,6 +111,7 @@ class KMeansCluster:
 
         print(f"Traversing the {self.i}th sample point! ")
         dot = self.data_set[self.i]
+        self.draw_ax()
         plt.pause(0.1)
 
         for k in range(len(self.my_centroids)):
@@ -143,6 +148,7 @@ class KMeansCluster:
 
     def change_color(self, event):      #classify按钮的功能
         self.draw_ax()
+        plt.pause(0.1)
         print("Color of sample points has been changed.")
 
     #函数功能：跳过接下来未完成的分类
@@ -208,9 +214,9 @@ class KMeansCluster:
         self.bkmeans.on_clicked(self.kMeans)        #Kmeans按钮
         plt.show()
 
-# if __name__ == '__main__':
-#     kmeans_cluster = KMeansCluster("kmeans_dataset.txt")
-#     kmeans_cluster.run()
+#if __name__ == '__main__':
+#    kmeans_cluster = KMeansCluster("kmeans_dataset.txt")
+#    kmeans_cluster.run()
 
 
 

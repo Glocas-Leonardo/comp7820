@@ -3,6 +3,12 @@ from tkinter import filedialog
 from tkinter import messagebox
 from Dclass import DensityPeakCluster  # 导入 DensityPeak 类
 from Kclass import KMeansCluster       # 导入 Kmeans 类
+from PIL import Image, ImageTk
+from threading import Thread
+
+
+
+
 
 class AlgorithmSelectionApp:
     def __init__(self):
@@ -30,6 +36,15 @@ class AlgorithmSelectionApp:
         self.density_peak_execute_button = tk.Button(self.density_peak_frame, text="Execute Density Peak", command=self.execute_density_peak_algorithm)
         self.density_peak_execute_button.pack()
 
+    # 在AlgorithmSelectionApp中添加显示图像的函数
+    def show_image(self, image_path, frame):
+        image = Image.open(image_path)
+        photo = ImageTk.PhotoImage(image)
+        label = tk.Label(frame, image=photo)
+        label.image = photo  # 保持对图像的引用，避免垃圾回收
+        label.pack()
+    
+
     def upload_kmeans_data(self):
         self.file_path_kmeans = filedialog.askopenfilename()  # 上传 K-means 的数据集
         if not self.file_path_kmeans:
@@ -49,10 +64,19 @@ class AlgorithmSelectionApp:
             try:
                 kmeans_cluster = KMeansCluster(self.file_path_kmeans)
                 messagebox.showinfo("Execution", "K-means algorithm executed successfully!")
+                while True: #无限循环
+                    if not self.root.update():
+                        kmeans_cluster.run()
+                        kmeans_cluster.draw_ax()
+                        break
+                #self.show_image("./kMeans.jpg", self.kmeans_frame)  # 显示Kclass生成的图像
+
             except Exception as e:
                 messagebox.showerror("Error", f"Failed to execute K-means algorithm: {e}")
         else:
             messagebox.showerror("Error", "Please upload K-means data first!")
+
+
 
 
     def execute_density_peak_algorithm(self):
@@ -60,6 +84,8 @@ class AlgorithmSelectionApp:
             try:
                 density_peak_cluster = DensityPeakCluster(self.file_path_density_peak)
                 messagebox.showinfo("Execution", "Density Peak algorithm executed successfully!")
+                self.show_image("dpc_dataset.txt_cluster.jpg", self.density_peak_frame)  # 显示Dclass生成的图像
+                self.show_image("dpc_dataset.txt_decision.jpg", self.density_peak_frame)  # 显示Dclass生成的图像
             except Exception as e:
                 messagebox.showerror("Error", f"Failed to execute Density Peak algorithm: {e}")
         else:

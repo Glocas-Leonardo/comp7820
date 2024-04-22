@@ -137,7 +137,7 @@ class DensityPeakCluster:
             plt.xlabel("rho")
             plt.ylabel("deltas")
         plt.savefig(name)
-        plt.show()
+        #plt.show()
 
     def draw_cluster(self, datas, labs, centers, name):
         plt.cla()
@@ -151,7 +151,7 @@ class DensityPeakCluster:
             # 画聚类中心
             plt.scatter(datas[centers[k], 0], datas[centers[k], 1], color="k", marker="+", s=200.)
         plt.savefig(name)
-        plt.show()
+        #plt.show()
 
 #if __name__ == "__main__":
    # file_name = 'dpc_dataset.txt'
