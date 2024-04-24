@@ -48,6 +48,7 @@ class AlgorithmSelectionApp:
         if self.file_path_kmeans:
             try:
                 kmeans_cluster = KMeansCluster(self.file_path_kmeans)
+                kmeans_cluster.run()
                 messagebox.showinfo("Execution", "K-means algorithm executed successfully!")
             except Exception as e:
                 messagebox.showerror("Error", f"Failed to execute K-means algorithm: {e}")
